@@ -1,0 +1,689 @@
+Grammar
+
+    0 $accept: Q $end
+
+    1 Q: STM
+    2  | Q STM
+
+    3 $@1: %empty
+
+    4 STM: cb1 $@1 A cb2
+
+    5 A: T B SCOL A
+    6  | STM A
+    7  | error
+    8  | %empty
+    9  | stl A
+
+   10 B: B COMMA D
+   11  | D
+
+   12 D: P ID K
+
+   13 P: MUL P
+   14  | %empty
+
+   15 K: R
+   16  | ASGN NUM
+   17  | ASGN FNUM
+   18  | %empty
+
+   19 R: sq1 NUM sq2 R
+   20  | sq1 NUM sq2
+
+   21 T: INT
+   22  | FLOAT
+   23  | CHAR
+
+   24 stl: st SCOL
+
+   25 st: L ASGN EXPR
+
+   26 EXPR: EXPR ADD TERM
+   27     | EXPR SUB TERM
+   28     | TERM
+
+   29 TERM: TERM MUL FACT
+   30     | TERM DIV FACT
+   31     | FACT
+
+   32 FACT: LP EXPR RP
+   33     | NUMBER
+   34     | FNUM
+   35     | ID
+
+   36 L: ID
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 7
+NUM (258) 16 19 20
+FNUM (259) 17 34
+sq1 (260) 19 20
+sq2 (261) 19 20
+FLOAT (262) 22
+INT (263) 21
+CHAR (264) 23
+SCOL (265) 5 24
+COMMA (266) 10
+ID (267) 12 35 36
+cb1 (268) 4
+cb2 (269) 4
+LP (270) 32
+RP (271) 32
+NUMBER (272) 33
+ADD (273) 26
+SUB (274) 27
+MUL (275) 13 29
+DIV (276) 30
+ASGN (277) 16 17 25
+
+
+Nonterminals, with rules where they appear
+
+$accept (23)
+    on left: 0
+Q (24)
+    on left: 1 2, on right: 0 2
+STM (25)
+    on left: 4, on right: 1 2 6
+$@1 (26)
+    on left: 3, on right: 4
+A (27)
+    on left: 5 6 7 8 9, on right: 4 5 6 9
+B (28)
+    on left: 10 11, on right: 5 10
+D (29)
+    on left: 12, on right: 10 11
+P (30)
+    on left: 13 14, on right: 12 13
+K (31)
+    on left: 15 16 17 18, on right: 12
+R (32)
+    on left: 19 20, on right: 15 19
+T (33)
+    on left: 21 22 23, on right: 5
+stl (34)
+    on left: 24, on right: 9
+st (35)
+    on left: 25, on right: 24
+EXPR (36)
+    on left: 26 27 28, on right: 25 26 27 32
+TERM (37)
+    on left: 29 30 31, on right: 26 27 28 29 30
+FACT (38)
+    on left: 32 33 34 35, on right: 29 30 31
+L (39)
+    on left: 36, on right: 25
+
+
+State 0
+
+    0 $accept: . Q $end
+
+    cb1  shift, and go to state 1
+
+    Q    go to state 2
+    STM  go to state 3
+
+
+State 1
+
+    4 STM: cb1 . $@1 A cb2
+
+    $default  reduce using rule 3 ($@1)
+
+    $@1  go to state 4
+
+
+State 2
+
+    0 $accept: Q . $end
+    2 Q: Q . STM
+
+    $end  shift, and go to state 5
+    cb1   shift, and go to state 1
+
+    STM  go to state 6
+
+
+State 3
+
+    1 Q: STM .
+
+    $default  reduce using rule 1 (Q)
+
+
+State 4
+
+    4 STM: cb1 $@1 . A cb2
+
+    error  shift, and go to state 7
+    FLOAT  shift, and go to state 8
+    INT    shift, and go to state 9
+    CHAR   shift, and go to state 10
+    ID     shift, and go to state 11
+    cb1    shift, and go to state 1
+
+    cb2  reduce using rule 8 (A)
+
+    STM  go to state 12
+    A    go to state 13
+    T    go to state 14
+    stl  go to state 15
+    st   go to state 16
+    L    go to state 17
+
+
+State 5
+
+    0 $accept: Q $end .
+
+    $default  accept
+
+
+State 6
+
+    2 Q: Q STM .
+
+    $default  reduce using rule 2 (Q)
+
+
+State 7
+
+    7 A: error .
+
+    $default  reduce using rule 7 (A)
+
+
+State 8
+
+   22 T: FLOAT .
+
+    $default  reduce using rule 22 (T)
+
+
+State 9
+
+   21 T: INT .
+
+    $default  reduce using rule 21 (T)
+
+
+State 10
+
+   23 T: CHAR .
+
+    $default  reduce using rule 23 (T)
+
+
+State 11
+
+   36 L: ID .
+
+    $default  reduce using rule 36 (L)
+
+
+State 12
+
+    6 A: STM . A
+
+    error  shift, and go to state 7
+    FLOAT  shift, and go to state 8
+    INT    shift, and go to state 9
+    CHAR   shift, and go to state 10
+    ID     shift, and go to state 11
+    cb1    shift, and go to state 1
+
+    cb2  reduce using rule 8 (A)
+
+    STM  go to state 12
+    A    go to state 18
+    T    go to state 14
+    stl  go to state 15
+    st   go to state 16
+    L    go to state 17
+
+
+State 13
+
+    4 STM: cb1 $@1 A . cb2
+
+    cb2  shift, and go to state 19
+
+
+State 14
+
+    5 A: T . B SCOL A
+
+    MUL  shift, and go to state 20
+
+    $default  reduce using rule 14 (P)
+
+    B  go to state 21
+    D  go to state 22
+    P  go to state 23
+
+
+State 15
+
+    9 A: stl . A
+
+    error  shift, and go to state 7
+    FLOAT  shift, and go to state 8
+    INT    shift, and go to state 9
+    CHAR   shift, and go to state 10
+    ID     shift, and go to state 11
+    cb1    shift, and go to state 1
+
+    cb2  reduce using rule 8 (A)
+
+    STM  go to state 12
+    A    go to state 24
+    T    go to state 14
+    stl  go to state 15
+    st   go to state 16
+    L    go to state 17
+
+
+State 16
+
+   24 stl: st . SCOL
+
+    SCOL  shift, and go to state 25
+
+
+State 17
+
+   25 st: L . ASGN EXPR
+
+    ASGN  shift, and go to state 26
+
+
+State 18
+
+    6 A: STM A .
+
+    $default  reduce using rule 6 (A)
+
+
+State 19
+
+    4 STM: cb1 $@1 A cb2 .
+
+    $default  reduce using rule 4 (STM)
+
+
+State 20
+
+   13 P: MUL . P
+
+    MUL  shift, and go to state 20
+
+    $default  reduce using rule 14 (P)
+
+    P  go to state 27
+
+
+State 21
+
+    5 A: T B . SCOL A
+   10 B: B . COMMA D
+
+    SCOL   shift, and go to state 28
+    COMMA  shift, and go to state 29
+
+
+State 22
+
+   11 B: D .
+
+    $default  reduce using rule 11 (B)
+
+
+State 23
+
+   12 D: P . ID K
+
+    ID  shift, and go to state 30
+
+
+State 24
+
+    9 A: stl A .
+
+    $default  reduce using rule 9 (A)
+
+
+State 25
+
+   24 stl: st SCOL .
+
+    $default  reduce using rule 24 (stl)
+
+
+State 26
+
+   25 st: L ASGN . EXPR
+
+    FNUM    shift, and go to state 31
+    ID      shift, and go to state 32
+    LP      shift, and go to state 33
+    NUMBER  shift, and go to state 34
+
+    EXPR  go to state 35
+    TERM  go to state 36
+    FACT  go to state 37
+
+
+State 27
+
+   13 P: MUL P .
+
+    $default  reduce using rule 13 (P)
+
+
+State 28
+
+    5 A: T B SCOL . A
+
+    error  shift, and go to state 7
+    FLOAT  shift, and go to state 8
+    INT    shift, and go to state 9
+    CHAR   shift, and go to state 10
+    ID     shift, and go to state 11
+    cb1    shift, and go to state 1
+
+    cb2  reduce using rule 8 (A)
+
+    STM  go to state 12
+    A    go to state 38
+    T    go to state 14
+    stl  go to state 15
+    st   go to state 16
+    L    go to state 17
+
+
+State 29
+
+   10 B: B COMMA . D
+
+    MUL  shift, and go to state 20
+
+    $default  reduce using rule 14 (P)
+
+    D  go to state 39
+    P  go to state 23
+
+
+State 30
+
+   12 D: P ID . K
+
+    sq1   shift, and go to state 40
+    ASGN  shift, and go to state 41
+
+    $default  reduce using rule 18 (K)
+
+    K  go to state 42
+    R  go to state 43
+
+
+State 31
+
+   34 FACT: FNUM .
+
+    $default  reduce using rule 34 (FACT)
+
+
+State 32
+
+   35 FACT: ID .
+
+    $default  reduce using rule 35 (FACT)
+
+
+State 33
+
+   32 FACT: LP . EXPR RP
+
+    FNUM    shift, and go to state 31
+    ID      shift, and go to state 32
+    LP      shift, and go to state 33
+    NUMBER  shift, and go to state 34
+
+    EXPR  go to state 44
+    TERM  go to state 36
+    FACT  go to state 37
+
+
+State 34
+
+   33 FACT: NUMBER .
+
+    $default  reduce using rule 33 (FACT)
+
+
+State 35
+
+   25 st: L ASGN EXPR .
+   26 EXPR: EXPR . ADD TERM
+   27     | EXPR . SUB TERM
+
+    ADD  shift, and go to state 45
+    SUB  shift, and go to state 46
+
+    $default  reduce using rule 25 (st)
+
+
+State 36
+
+   28 EXPR: TERM .
+   29 TERM: TERM . MUL FACT
+   30     | TERM . DIV FACT
+
+    MUL  shift, and go to state 47
+    DIV  shift, and go to state 48
+
+    $default  reduce using rule 28 (EXPR)
+
+
+State 37
+
+   31 TERM: FACT .
+
+    $default  reduce using rule 31 (TERM)
+
+
+State 38
+
+    5 A: T B SCOL A .
+
+    $default  reduce using rule 5 (A)
+
+
+State 39
+
+   10 B: B COMMA D .
+
+    $default  reduce using rule 10 (B)
+
+
+State 40
+
+   19 R: sq1 . NUM sq2 R
+   20  | sq1 . NUM sq2
+
+    NUM  shift, and go to state 49
+
+
+State 41
+
+   16 K: ASGN . NUM
+   17  | ASGN . FNUM
+
+    NUM   shift, and go to state 50
+    FNUM  shift, and go to state 51
+
+
+State 42
+
+   12 D: P ID K .
+
+    $default  reduce using rule 12 (D)
+
+
+State 43
+
+   15 K: R .
+
+    $default  reduce using rule 15 (K)
+
+
+State 44
+
+   26 EXPR: EXPR . ADD TERM
+   27     | EXPR . SUB TERM
+   32 FACT: LP EXPR . RP
+
+    RP   shift, and go to state 52
+    ADD  shift, and go to state 45
+    SUB  shift, and go to state 46
+
+
+State 45
+
+   26 EXPR: EXPR ADD . TERM
+
+    FNUM    shift, and go to state 31
+    ID      shift, and go to state 32
+    LP      shift, and go to state 33
+    NUMBER  shift, and go to state 34
+
+    TERM  go to state 53
+    FACT  go to state 37
+
+
+State 46
+
+   27 EXPR: EXPR SUB . TERM
+
+    FNUM    shift, and go to state 31
+    ID      shift, and go to state 32
+    LP      shift, and go to state 33
+    NUMBER  shift, and go to state 34
+
+    TERM  go to state 54
+    FACT  go to state 37
+
+
+State 47
+
+   29 TERM: TERM MUL . FACT
+
+    FNUM    shift, and go to state 31
+    ID      shift, and go to state 32
+    LP      shift, and go to state 33
+    NUMBER  shift, and go to state 34
+
+    FACT  go to state 55
+
+
+State 48
+
+   30 TERM: TERM DIV . FACT
+
+    FNUM    shift, and go to state 31
+    ID      shift, and go to state 32
+    LP      shift, and go to state 33
+    NUMBER  shift, and go to state 34
+
+    FACT  go to state 56
+
+
+State 49
+
+   19 R: sq1 NUM . sq2 R
+   20  | sq1 NUM . sq2
+
+    sq2  shift, and go to state 57
+
+
+State 50
+
+   16 K: ASGN NUM .
+
+    $default  reduce using rule 16 (K)
+
+
+State 51
+
+   17 K: ASGN FNUM .
+
+    $default  reduce using rule 17 (K)
+
+
+State 52
+
+   32 FACT: LP EXPR RP .
+
+    $default  reduce using rule 32 (FACT)
+
+
+State 53
+
+   26 EXPR: EXPR ADD TERM .
+   29 TERM: TERM . MUL FACT
+   30     | TERM . DIV FACT
+
+    MUL  shift, and go to state 47
+    DIV  shift, and go to state 48
+
+    $default  reduce using rule 26 (EXPR)
+
+
+State 54
+
+   27 EXPR: EXPR SUB TERM .
+   29 TERM: TERM . MUL FACT
+   30     | TERM . DIV FACT
+
+    MUL  shift, and go to state 47
+    DIV  shift, and go to state 48
+
+    $default  reduce using rule 27 (EXPR)
+
+
+State 55
+
+   29 TERM: TERM MUL FACT .
+
+    $default  reduce using rule 29 (TERM)
+
+
+State 56
+
+   30 TERM: TERM DIV FACT .
+
+    $default  reduce using rule 30 (TERM)
+
+
+State 57
+
+   19 R: sq1 NUM sq2 . R
+   20  | sq1 NUM sq2 .
+
+    sq1  shift, and go to state 40
+
+    $default  reduce using rule 20 (R)
+
+    R  go to state 58
+
+
+State 58
+
+   19 R: sq1 NUM sq2 R .
+
+    $default  reduce using rule 19 (R)

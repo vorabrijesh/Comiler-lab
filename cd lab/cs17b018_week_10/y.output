@@ -1,0 +1,1013 @@
+Terminals unused in grammar
+
+   mod
+   POLU
+
+
+Grammar
+
+    0 $accept: Q $end
+
+    1 Q: STM
+    2  | Q STM
+
+    3 STM: cb1 A1 cb2
+    4    | cb1 cb2
+
+    5 A1: A
+    6   | A1 A
+
+    7 A: T B doll
+    8  | st doll
+    9  | STM
+   10  | IEST
+   11  | WST
+
+   12 B: B comma D
+   13  | D
+
+   14 D: P ID K
+
+   15 P: pt1 P
+   16  | pt1
+
+   17 K: R
+   18  | eql num
+   19  | eql fnum
+   20  | %empty
+
+   21 R: sq1 num sq2 R
+   22  | sq1 num sq2
+
+   23 T: INT
+   24  | FLOAT
+   25  | CHAR
+
+   26 st: L eql EXPR
+
+   27 EXPR: EXPR ADD TERM
+   28     | EXPR SUB TERM
+   29     | TERM
+
+   30 TERM: TERM pt1 FACT
+   31     | TERM DIV FACT
+   32     | FACT
+
+   33 FACT: LP EXPR RP
+   34     | num
+   35     | fnum
+   36     | ID
+
+   37 L: ID
+
+   38 IEST: IF LP COND RP A ELSE A
+   39     | IF LP COND RP A
+
+   40 WST: WHILE LP COND RP A
+
+   41 COND: COND OR COND
+   42     | COND AND COND
+   43     | NOT COND
+   44     | EXPR REL EXPR
+   45     | EXPR
+   46     | LP COND RP
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+num (258) 18 21 22 34
+fnum (259) 19 35
+sq1 (260) 21 22
+sq2 (261) 21 22
+FLOAT (262) 24
+INT (263) 23
+CHAR (264) 25
+doll (265) 7 8
+comma (266) 12
+ID (267) 14 36 37
+cb1 (268) 3 4
+cb2 (269) 3 4
+eql (270) 18 19 26
+pt1 (271) 15 16 30
+ADD (272) 27
+SUB (273) 28
+mod (274)
+DIV (275) 31
+LP (276) 33 38 39 40 46
+RP (277) 33 38 39 40 46
+ELSE (278) 38
+IF (279) 38 39
+WHILE (280) 40
+REL (281) 44
+AND (282) 42
+OR (283) 41
+NOT (284) 43
+REDUCE (285)
+POLU (286)
+GOLU (287)
+
+
+Nonterminals, with rules where they appear
+
+$accept (33)
+    on left: 0
+Q (34)
+    on left: 1 2, on right: 0 2
+STM (35)
+    on left: 3 4, on right: 1 2 9
+A1 (36)
+    on left: 5 6, on right: 3 6
+A (37)
+    on left: 7 8 9 10 11, on right: 5 6 38 39 40
+B (38)
+    on left: 12 13, on right: 7 12
+D (39)
+    on left: 14, on right: 12 13
+P (40)
+    on left: 15 16, on right: 14 15
+K (41)
+    on left: 17 18 19 20, on right: 14
+R (42)
+    on left: 21 22, on right: 17 21
+T (43)
+    on left: 23 24 25, on right: 7
+st (44)
+    on left: 26, on right: 8
+EXPR (45)
+    on left: 27 28 29, on right: 26 27 28 33 44 45
+TERM (46)
+    on left: 30 31 32, on right: 27 28 29 30 31
+FACT (47)
+    on left: 33 34 35 36, on right: 30 31 32
+L (48)
+    on left: 37, on right: 26
+IEST (49)
+    on left: 38 39, on right: 10
+WST (50)
+    on left: 40, on right: 11
+COND (51)
+    on left: 41 42 43 44 45 46, on right: 38 39 40 41 42 43 46
+
+
+State 0
+
+    0 $accept: . Q $end
+
+    cb1  shift, and go to state 1
+
+    Q    go to state 2
+    STM  go to state 3
+
+
+State 1
+
+    3 STM: cb1 . A1 cb2
+    4    | cb1 . cb2
+
+    FLOAT  shift, and go to state 4
+    INT    shift, and go to state 5
+    CHAR   shift, and go to state 6
+    ID     shift, and go to state 7
+    cb1    shift, and go to state 1
+    cb2    shift, and go to state 8
+    IF     shift, and go to state 9
+    WHILE  shift, and go to state 10
+
+    STM   go to state 11
+    A1    go to state 12
+    A     go to state 13
+    T     go to state 14
+    st    go to state 15
+    L     go to state 16
+    IEST  go to state 17
+    WST   go to state 18
+
+
+State 2
+
+    0 $accept: Q . $end
+    2 Q: Q . STM
+
+    $end  shift, and go to state 19
+    cb1   shift, and go to state 1
+
+    STM  go to state 20
+
+
+State 3
+
+    1 Q: STM .
+
+    $default  reduce using rule 1 (Q)
+
+
+State 4
+
+   24 T: FLOAT .
+
+    $default  reduce using rule 24 (T)
+
+
+State 5
+
+   23 T: INT .
+
+    $default  reduce using rule 23 (T)
+
+
+State 6
+
+   25 T: CHAR .
+
+    $default  reduce using rule 25 (T)
+
+
+State 7
+
+   37 L: ID .
+
+    $default  reduce using rule 37 (L)
+
+
+State 8
+
+    4 STM: cb1 cb2 .
+
+    $default  reduce using rule 4 (STM)
+
+
+State 9
+
+   38 IEST: IF . LP COND RP A ELSE A
+   39     | IF . LP COND RP A
+
+    LP  shift, and go to state 21
+
+
+State 10
+
+   40 WST: WHILE . LP COND RP A
+
+    LP  shift, and go to state 22
+
+
+State 11
+
+    9 A: STM .
+
+    $default  reduce using rule 9 (A)
+
+
+State 12
+
+    3 STM: cb1 A1 . cb2
+    6 A1: A1 . A
+
+    FLOAT  shift, and go to state 4
+    INT    shift, and go to state 5
+    CHAR   shift, and go to state 6
+    ID     shift, and go to state 7
+    cb1    shift, and go to state 1
+    cb2    shift, and go to state 23
+    IF     shift, and go to state 9
+    WHILE  shift, and go to state 10
+
+    STM   go to state 11
+    A     go to state 24
+    T     go to state 14
+    st    go to state 15
+    L     go to state 16
+    IEST  go to state 17
+    WST   go to state 18
+
+
+State 13
+
+    5 A1: A .
+
+    $default  reduce using rule 5 (A1)
+
+
+State 14
+
+    7 A: T . B doll
+
+    pt1  shift, and go to state 25
+
+    B  go to state 26
+    D  go to state 27
+    P  go to state 28
+
+
+State 15
+
+    8 A: st . doll
+
+    doll  shift, and go to state 29
+
+
+State 16
+
+   26 st: L . eql EXPR
+
+    eql  shift, and go to state 30
+
+
+State 17
+
+   10 A: IEST .
+
+    $default  reduce using rule 10 (A)
+
+
+State 18
+
+   11 A: WST .
+
+    $default  reduce using rule 11 (A)
+
+
+State 19
+
+    0 $accept: Q $end .
+
+    $default  accept
+
+
+State 20
+
+    2 Q: Q STM .
+
+    $default  reduce using rule 2 (Q)
+
+
+State 21
+
+   38 IEST: IF LP . COND RP A ELSE A
+   39     | IF LP . COND RP A
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 34
+    NOT   shift, and go to state 35
+
+    EXPR  go to state 36
+    TERM  go to state 37
+    FACT  go to state 38
+    COND  go to state 39
+
+
+State 22
+
+   40 WST: WHILE LP . COND RP A
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 34
+    NOT   shift, and go to state 35
+
+    EXPR  go to state 36
+    TERM  go to state 37
+    FACT  go to state 38
+    COND  go to state 40
+
+
+State 23
+
+    3 STM: cb1 A1 cb2 .
+
+    $default  reduce using rule 3 (STM)
+
+
+State 24
+
+    6 A1: A1 A .
+
+    $default  reduce using rule 6 (A1)
+
+
+State 25
+
+   15 P: pt1 . P
+   16  | pt1 .
+
+    pt1  shift, and go to state 25
+
+    $default  reduce using rule 16 (P)
+
+    P  go to state 41
+
+
+State 26
+
+    7 A: T B . doll
+   12 B: B . comma D
+
+    doll   shift, and go to state 42
+    comma  shift, and go to state 43
+
+
+State 27
+
+   13 B: D .
+
+    $default  reduce using rule 13 (B)
+
+
+State 28
+
+   14 D: P . ID K
+
+    ID  shift, and go to state 44
+
+
+State 29
+
+    8 A: st doll .
+
+    $default  reduce using rule 8 (A)
+
+
+State 30
+
+   26 st: L eql . EXPR
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    EXPR  go to state 46
+    TERM  go to state 37
+    FACT  go to state 38
+
+
+State 31
+
+   34 FACT: num .
+
+    $default  reduce using rule 34 (FACT)
+
+
+State 32
+
+   35 FACT: fnum .
+
+    $default  reduce using rule 35 (FACT)
+
+
+State 33
+
+   36 FACT: ID .
+
+    $default  reduce using rule 36 (FACT)
+
+
+State 34
+
+   33 FACT: LP . EXPR RP
+   46 COND: LP . COND RP
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 34
+    NOT   shift, and go to state 35
+
+    EXPR  go to state 47
+    TERM  go to state 37
+    FACT  go to state 38
+    COND  go to state 48
+
+
+State 35
+
+   43 COND: NOT . COND
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 34
+    NOT   shift, and go to state 35
+
+    EXPR  go to state 36
+    TERM  go to state 37
+    FACT  go to state 38
+    COND  go to state 49
+
+
+State 36
+
+   27 EXPR: EXPR . ADD TERM
+   28     | EXPR . SUB TERM
+   44 COND: EXPR . REL EXPR
+   45     | EXPR .
+
+    ADD  shift, and go to state 50
+    SUB  shift, and go to state 51
+    REL  shift, and go to state 52
+
+    $default  reduce using rule 45 (COND)
+
+
+State 37
+
+   29 EXPR: TERM .
+   30 TERM: TERM . pt1 FACT
+   31     | TERM . DIV FACT
+
+    pt1  shift, and go to state 53
+    DIV  shift, and go to state 54
+
+    $default  reduce using rule 29 (EXPR)
+
+
+State 38
+
+   32 TERM: FACT .
+
+    $default  reduce using rule 32 (TERM)
+
+
+State 39
+
+   38 IEST: IF LP COND . RP A ELSE A
+   39     | IF LP COND . RP A
+   41 COND: COND . OR COND
+   42     | COND . AND COND
+
+    RP   shift, and go to state 55
+    AND  shift, and go to state 56
+    OR   shift, and go to state 57
+
+
+State 40
+
+   40 WST: WHILE LP COND . RP A
+   41 COND: COND . OR COND
+   42     | COND . AND COND
+
+    RP   shift, and go to state 58
+    AND  shift, and go to state 56
+    OR   shift, and go to state 57
+
+
+State 41
+
+   15 P: pt1 P .
+
+    $default  reduce using rule 15 (P)
+
+
+State 42
+
+    7 A: T B doll .
+
+    $default  reduce using rule 7 (A)
+
+
+State 43
+
+   12 B: B comma . D
+
+    pt1  shift, and go to state 25
+
+    D  go to state 59
+    P  go to state 28
+
+
+State 44
+
+   14 D: P ID . K
+
+    sq1  shift, and go to state 60
+    eql  shift, and go to state 61
+
+    $default  reduce using rule 20 (K)
+
+    K  go to state 62
+    R  go to state 63
+
+
+State 45
+
+   33 FACT: LP . EXPR RP
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    EXPR  go to state 64
+    TERM  go to state 37
+    FACT  go to state 38
+
+
+State 46
+
+   26 st: L eql EXPR .
+   27 EXPR: EXPR . ADD TERM
+   28     | EXPR . SUB TERM
+
+    ADD  shift, and go to state 50
+    SUB  shift, and go to state 51
+
+    $default  reduce using rule 26 (st)
+
+
+State 47
+
+   27 EXPR: EXPR . ADD TERM
+   28     | EXPR . SUB TERM
+   33 FACT: LP EXPR . RP
+   44 COND: EXPR . REL EXPR
+   45     | EXPR .
+
+    ADD  shift, and go to state 50
+    SUB  shift, and go to state 51
+    RP   shift, and go to state 65
+    REL  shift, and go to state 52
+
+    $default  reduce using rule 45 (COND)
+
+
+State 48
+
+   41 COND: COND . OR COND
+   42     | COND . AND COND
+   46     | LP COND . RP
+
+    RP   shift, and go to state 66
+    AND  shift, and go to state 56
+    OR   shift, and go to state 57
+
+
+State 49
+
+   41 COND: COND . OR COND
+   42     | COND . AND COND
+   43     | NOT COND .
+
+    $default  reduce using rule 43 (COND)
+
+
+State 50
+
+   27 EXPR: EXPR ADD . TERM
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    TERM  go to state 67
+    FACT  go to state 38
+
+
+State 51
+
+   28 EXPR: EXPR SUB . TERM
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    TERM  go to state 68
+    FACT  go to state 38
+
+
+State 52
+
+   44 COND: EXPR REL . EXPR
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    EXPR  go to state 69
+    TERM  go to state 37
+    FACT  go to state 38
+
+
+State 53
+
+   30 TERM: TERM pt1 . FACT
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    FACT  go to state 70
+
+
+State 54
+
+   31 TERM: TERM DIV . FACT
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 45
+
+    FACT  go to state 71
+
+
+State 55
+
+   38 IEST: IF LP COND RP . A ELSE A
+   39     | IF LP COND RP . A
+
+    FLOAT  shift, and go to state 4
+    INT    shift, and go to state 5
+    CHAR   shift, and go to state 6
+    ID     shift, and go to state 7
+    cb1    shift, and go to state 1
+    IF     shift, and go to state 9
+    WHILE  shift, and go to state 10
+
+    STM   go to state 11
+    A     go to state 72
+    T     go to state 14
+    st    go to state 15
+    L     go to state 16
+    IEST  go to state 17
+    WST   go to state 18
+
+
+State 56
+
+   42 COND: COND AND . COND
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 34
+    NOT   shift, and go to state 35
+
+    EXPR  go to state 36
+    TERM  go to state 37
+    FACT  go to state 38
+    COND  go to state 73
+
+
+State 57
+
+   41 COND: COND OR . COND
+
+    num   shift, and go to state 31
+    fnum  shift, and go to state 32
+    ID    shift, and go to state 33
+    LP    shift, and go to state 34
+    NOT   shift, and go to state 35
+
+    EXPR  go to state 36
+    TERM  go to state 37
+    FACT  go to state 38
+    COND  go to state 74
+
+
+State 58
+
+   40 WST: WHILE LP COND RP . A
+
+    FLOAT  shift, and go to state 4
+    INT    shift, and go to state 5
+    CHAR   shift, and go to state 6
+    ID     shift, and go to state 7
+    cb1    shift, and go to state 1
+    IF     shift, and go to state 9
+    WHILE  shift, and go to state 10
+
+    STM   go to state 11
+    A     go to state 75
+    T     go to state 14
+    st    go to state 15
+    L     go to state 16
+    IEST  go to state 17
+    WST   go to state 18
+
+
+State 59
+
+   12 B: B comma D .
+
+    $default  reduce using rule 12 (B)
+
+
+State 60
+
+   21 R: sq1 . num sq2 R
+   22  | sq1 . num sq2
+
+    num  shift, and go to state 76
+
+
+State 61
+
+   18 K: eql . num
+   19  | eql . fnum
+
+    num   shift, and go to state 77
+    fnum  shift, and go to state 78
+
+
+State 62
+
+   14 D: P ID K .
+
+    $default  reduce using rule 14 (D)
+
+
+State 63
+
+   17 K: R .
+
+    $default  reduce using rule 17 (K)
+
+
+State 64
+
+   27 EXPR: EXPR . ADD TERM
+   28     | EXPR . SUB TERM
+   33 FACT: LP EXPR . RP
+
+    ADD  shift, and go to state 50
+    SUB  shift, and go to state 51
+    RP   shift, and go to state 65
+
+
+State 65
+
+   33 FACT: LP EXPR RP .
+
+    $default  reduce using rule 33 (FACT)
+
+
+State 66
+
+   46 COND: LP COND RP .
+
+    $default  reduce using rule 46 (COND)
+
+
+State 67
+
+   27 EXPR: EXPR ADD TERM .
+   30 TERM: TERM . pt1 FACT
+   31     | TERM . DIV FACT
+
+    pt1  shift, and go to state 53
+    DIV  shift, and go to state 54
+
+    $default  reduce using rule 27 (EXPR)
+
+
+State 68
+
+   28 EXPR: EXPR SUB TERM .
+   30 TERM: TERM . pt1 FACT
+   31     | TERM . DIV FACT
+
+    pt1  shift, and go to state 53
+    DIV  shift, and go to state 54
+
+    $default  reduce using rule 28 (EXPR)
+
+
+State 69
+
+   27 EXPR: EXPR . ADD TERM
+   28     | EXPR . SUB TERM
+   44 COND: EXPR REL EXPR .
+
+    ADD  shift, and go to state 50
+    SUB  shift, and go to state 51
+
+    $default  reduce using rule 44 (COND)
+
+
+State 70
+
+   30 TERM: TERM pt1 FACT .
+
+    $default  reduce using rule 30 (TERM)
+
+
+State 71
+
+   31 TERM: TERM DIV FACT .
+
+    $default  reduce using rule 31 (TERM)
+
+
+State 72
+
+   38 IEST: IF LP COND RP A . ELSE A
+   39     | IF LP COND RP A .
+
+    ELSE  shift, and go to state 79
+
+    $default  reduce using rule 39 (IEST)
+
+
+State 73
+
+   41 COND: COND . OR COND
+   42     | COND . AND COND
+   42     | COND AND COND .
+
+    $default  reduce using rule 42 (COND)
+
+
+State 74
+
+   41 COND: COND . OR COND
+   41     | COND OR COND .
+   42     | COND . AND COND
+
+    AND  shift, and go to state 56
+
+    $default  reduce using rule 41 (COND)
+
+
+State 75
+
+   40 WST: WHILE LP COND RP A .
+
+    $default  reduce using rule 40 (WST)
+
+
+State 76
+
+   21 R: sq1 num . sq2 R
+   22  | sq1 num . sq2
+
+    sq2  shift, and go to state 80
+
+
+State 77
+
+   18 K: eql num .
+
+    $default  reduce using rule 18 (K)
+
+
+State 78
+
+   19 K: eql fnum .
+
+    $default  reduce using rule 19 (K)
+
+
+State 79
+
+   38 IEST: IF LP COND RP A ELSE . A
+
+    FLOAT  shift, and go to state 4
+    INT    shift, and go to state 5
+    CHAR   shift, and go to state 6
+    ID     shift, and go to state 7
+    cb1    shift, and go to state 1
+    IF     shift, and go to state 9
+    WHILE  shift, and go to state 10
+
+    STM   go to state 11
+    A     go to state 81
+    T     go to state 14
+    st    go to state 15
+    L     go to state 16
+    IEST  go to state 17
+    WST   go to state 18
+
+
+State 80
+
+   21 R: sq1 num sq2 . R
+   22  | sq1 num sq2 .
+
+    sq1  shift, and go to state 60
+
+    $default  reduce using rule 22 (R)
+
+    R  go to state 82
+
+
+State 81
+
+   38 IEST: IF LP COND RP A ELSE A .
+
+    $default  reduce using rule 38 (IEST)
+
+
+State 82
+
+   21 R: sq1 num sq2 R .
+
+    $default  reduce using rule 21 (R)
